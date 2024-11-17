@@ -165,7 +165,6 @@
             <ul class="skin-options" id="skinOptions">
                 <li data-skin="default">浅色</li>
                 <li data-skin="dark">深色</li>
-                <!-- 其他皮肤选项将在这里动态添加 -->
             </ul>
         </div>
 
@@ -246,7 +245,6 @@
                 <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="黑马程序员"></div>
                 <div class="featured-name">黑马程序员</div>
             </div>
-            <!-- 添加更多重点UP主... -->
         </div>
 
         <div class="search-bar">
@@ -255,28 +253,23 @@
         </div>
 
         <div class="video-list" id="videoList">
-            <!-- 视频项将在这里动态添加 -->
         </div>
 
         <div class="loader" id="loader">加载中...</div>
     </div>
 
     <script>
-        // 缩略图和视频链接的字典
         const videoSources = [
             ["http://img.netbian.com/file/2024/1015/001100r9eHu.jpg", "https://example.com/video1.mp4", "超赞的编程教程", "TechGuru", "10:30", "1万+", "2天前"],
             ["http://img.netbian.com/file/2024/1015/001100r9eHu.jpg", "https://example.com/video2.mp4", "如何制作游戏？", "GameDevMaster", "15:45", "5千+", "1周前"],
             ["http://img.netbian.com/file/2024/1015/001100r9eHu.jpg", "https://example.com/video3.mp4", "Python基础入门", "CodeNewbie", "8:20", "3万+", "3天前"],
-            // 添加更多视频项...
         ];
 
-        // 背景图片URL数组
         const backgroundImages = [
-            "http://img.netbian.com/file/2024/1018/001548d3gdJ.jpg", // 浅色背景图片URL
-            "http://img.netbian.com/file/2024/0929/182833fnt2T.jpg", // 深色背景图片URL
-            "https://nie.res.netease.com/r/pic/20230810/bb68dd30-9de3-4e51-945c-358f7453629e.jpg", // 自定义背景图片URL 1
-            "http://img.netbian.com/file/2024/1108/103206bBYEV.jpg", // 自定义背景图片URL 2
-            // 添加更多背景图片URL...
+            "http://img.netbian.com/file/2024/1018/001548d3gdJ.jpg", 
+            "http://img.netbian.com/file/2024/0929/182833fnt2T.jpg", 
+            "https://nie.res.netease.com/r/pic/20230810/bb68dd30-9de3-4e51-945c-358f7453629e.jpg", 
+            "http://img.netbian.com/file/2024/1108/103206bBYEV.jpg", 
         ];
 
         let page = 1;
@@ -330,45 +323,41 @@
                     break;
                 default:
                     document.body.style.backgroundImage = `url("${backgroundImages[skinIndex]}")`;
-                    document.body.style.backgroundColor = '#f9f9f9'; // 或其他适当的颜色
+                    document.body.style.backgroundColor = '#f9f9f9'; 
                     break;
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            loadMoreVideos(); // 初始化加载一些视频
+            loadMoreVideos();
             window.addEventListener('scroll', handleScroll);
 
-            // 动态添加背景图片选项
             const skinOptions = document.getElementById('skinOptions');
             backgroundImages.slice(2).forEach((imageUrl, index) => {
                 const li = document.createElement('li');
                 li.textContent = `自定义背景 ${index + 1}`;
-                li.setAttribute('data-skin', index + 2); // 索引从2开始
+                li.setAttribute('data-skin', index + 2); 
                 li.addEventListener('click', function() {
                     applySkin(parseInt(this.getAttribute('data-skin')));
-                    skinOptions.style.display = 'none'; // 关闭选项列表
+                    skinOptions.style.display = 'none'; 
                 });
                 skinOptions.appendChild(li);
             });
 
-            // 添加点击事件监听器
             document.getElementById('videoList').addEventListener('click', function(event) {
                 const videoItem = event.target.closest('.video-item');
                 if (videoItem) {
                     const videoUrl = videoItem.getAttribute('data-video-url');
-                    window.open(videoUrl, '_blank'); // 在新标签页中打开视频链接
+                    window.open(videoUrl, '_blank'); 
                 }
             });
 
-            // 展开和关闭皮肤选项列表
             const skinButton = document.getElementById('skinButton');
             skinButton.addEventListener('click', function() {
                 const options = document.getElementById('skinOptions');
                 options.style.display = options.style.display === 'block' ? 'none' : 'block';
             });
 
-            // 关闭皮肤选项列表当点击其他地方时
             document.addEventListener('click', function(event) {
                 const targetElement = event.target;
                 const isClickInside = skinButton.contains(targetElement) || skinOptions.contains(targetElement);
@@ -377,10 +366,8 @@
                 }
             });
 
-            // 初始化应用默认皮肤
             applySkin(0);
 
-            // 搜索功能
             const searchButton = document.getElementById('searchButton');
             searchButton.addEventListener('click', function() {
                 const keyword = document.getElementById('searchInput').value.trim();
