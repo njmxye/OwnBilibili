@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>寻的毛笔</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            transition: background-image 0.5s ease;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .featured-uploads {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .featured-upload {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .featured-upload:hover {
+            transform: scale(1.05);
+        }
+        .featured-thumbnail img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .featured-name {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .search-bar input {
+            width: 70%;
+            padding: 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 30px;
+            outline: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        .search-bar button {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 30px;
+            background-color: #ff69b4;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-bar button:hover {
+            background-color: #ff1493;
+        }
+        .video-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .video-item {
+            background-color: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+        .video-item:hover {
+            transform: translateY(-10px);
+        }
+        .video-thumbnail img {
+            width: 100%;
+            height: auto;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        .video-details {
+            padding: 20px;
+        }
+        .video-details h3 {
+            font-size: 18px;
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .video-details p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #777;
+        }
+        .loader {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 16px;
+            color: #888;
+        }
+        .skin-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .skin-selector button {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 30px;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .skin-selector button:hover {
+            background-color: #ccc;
+        }
+        .skin-options {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            list-style-type: none;
+            padding: 10px 0;
+            margin: 0;
+        }
+        .skin-options li {
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .skin-options li:hover {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="skin-selector">
+            <button id="skinButton">选择皮肤</button>
+            <ul class="skin-options" id="skinOptions">
+                <li data-skin="default">浅色</li>
+                <li data-skin="dark">深色</li>
+                <!-- 其他皮肤选项将在这里动态添加 -->
+            </ul>
+        </div>
+
+        <div class="featured-uploads">
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/482091317/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="时迈矣"></div>
+                <div class="featured-name">时迈矣</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/3493105634380033/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="Leader王黎栋"></div>
+                <div class="featured-name">Leader王黎栋</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/348630592/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="十分绘画"></div>
+                <div class="featured-name">十分绘画</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/488030594/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="Hi-胡小Q"></div>
+                <div class="featured-name">Hi-胡小Q</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/1639178801/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="尘三昧"></div>
+                <div class="featured-name">尘三昧</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/3493079826828072/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="豌克思"></div>
+                <div class="featured-name">豌克思</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/456225239/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="无远山耶"></div>
+                <div class="featured-name">无远山耶</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/1257954297/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="铁锤观察室"></div>
+                <div class="featured-name">铁锤观察室</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/394740758/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="宙宇毛选自学"></div>
+                <div class="featured-name">宙宇毛选自学</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/302188068/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="小白debug"></div>
+                <div class="featured-name">小白debug</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/1661650467/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="底层的聪明人"></div>
+                <div class="featured-name">底层的聪明人</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/3546719203625618/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="神背会单词"></div>
+                <div class="featured-name">神背会单词</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/486316493/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="Kerry哲学"></div>
+                <div class="featured-name">Kerry哲学</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/679619486/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="国仁全球大学堂"></div>
+                <div class="featured-name">国仁全球大学堂</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/385746080/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="网文作者大年年"></div>
+                <div class="featured-name">网文作者大年年</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/178736501/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="一晨叔叔I光环摄影"></div>
+                <div class="featured-name">一晨叔叔I光环摄影</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/11429061/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="夏叔厨房"></div>
+                <div class="featured-name">夏叔厨房</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/2973198/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="轻微课"></div>
+                <div class="featured-name">轻微课</div>
+            </div>
+            <div class="featured-upload" onclick="window.open('https://space.bilibili.com/37974444/video', '_blank')">
+                <div class="featured-thumbnail"><img src="http://img.netbian.com/file/2024/1115/003200aonhD.jpg" alt="黑马程序员"></div>
+                <div class="featured-name">黑马程序员</div>
+            </div>
+            <!-- 添加更多重点UP主... -->
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="搜索视频...">
+            <button id="searchButton">搜索</button>
+        </div>
+
+        <div class="video-list" id="videoList">
+            <!-- 视频项将在这里动态添加 -->
+        </div>
+
+        <div class="loader" id="loader">加载中...</div>
+    </div>
+
+    <script>
+        // 缩略图和视频链接的字典
+        const videoSources = [
+            ["http://img.netbian.com/file/2024/1015/001100r9eHu.jpg", "https://example.com/video1.mp4", "超赞的编程教程", "TechGuru", "10:30", "1万+", "2天前"],
+            ["http://img.netbian.com/file/2024/1015/001100r9eHu.jpg", "https://example.com/video2.mp4", "如何制作游戏？", "GameDevMaster", "15:45", "5千+", "1周前"],
+            ["http://img.netbian.com/file/2024/1015/001100r9eHu.jpg", "https://example.com/video3.mp4", "Python基础入门", "CodeNewbie", "8:20", "3万+", "3天前"],
+            // 添加更多视频项...
+        ];
+
+        // 背景图片URL数组
+        const backgroundImages = [
+            "http://img.netbian.com/file/2024/1018/001548d3gdJ.jpg", // 浅色背景图片URL
+            "http://img.netbian.com/file/2024/0929/182833fnt2T.jpg", // 深色背景图片URL
+            "https://nie.res.netease.com/r/pic/20230810/bb68dd30-9de3-4e51-945c-358f7453629e.jpg", // 自定义背景图片URL 1
+            "http://img.netbian.com/file/2024/1108/103206bBYEV.jpg", // 自定义背景图片URL 2
+            // 添加更多背景图片URL...
+        ];
+
+        let page = 1;
+        const videosPerPage = 10;
+
+        function createVideoItem(index) {
+            if (index >= videoSources.length) return '';
+            const [thumbnailUrl, videoUrl, title, publisher, duration, views, publishTime] = videoSources[index];
+            return `
+                <div class="video-item" data-video-url="${videoUrl}">
+                    <div class="video-thumbnail"><img src="${thumbnailUrl}" alt="Thumbnail"></div>
+                    <div class="video-details">
+                        <h3>${title}</h3>
+                        <p>发布者: ${publisher}</p>
+                        <p>时长: ${duration}</p>
+                        <p>观看人数: ${views}</p>
+                        <p>发布时间: ${publishTime}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadMoreVideos() {
+            const videoList = document.getElementById('videoList');
+            for (let i = 0; i < videosPerPage && (page - 1) * videosPerPage + i < videoSources.length; i++) {
+                videoList.innerHTML += createVideoItem((page - 1) * videosPerPage + i);
+            }
+            page++;
+        }
+
+        function handleScroll() {
+            const loader = document.getElementById('loader');
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - loader.clientHeight) {
+                loadMoreVideos();
+            }
+        }
+
+        function applySkin(skinIndex) {
+            switch (skinIndex) {
+                case 0:
+                    document.body.style.backgroundImage = `url("${backgroundImages[0]}")`;
+                    document.body.style.backgroundColor = '#f9f9f9';
+                    break;
+                case 1:
+                    document.body.style.backgroundImage = `url("${backgroundImages[1]}")`;
+                    document.body.style.backgroundColor = '#333';
+                    document.querySelector('.search-bar input').style.color = '#fff';
+                    document.querySelector('.search-bar button').style.color = '#fff';
+                    document.querySelectorAll('.video-details h3').forEach(h3 => h3.style.color = '#fff');
+                    document.querySelectorAll('.video-details p').forEach(p => p.style.color = '#aaa');
+                    break;
+                default:
+                    document.body.style.backgroundImage = `url("${backgroundImages[skinIndex]}")`;
+                    document.body.style.backgroundColor = '#f9f9f9'; // 或其他适当的颜色
+                    break;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMoreVideos(); // 初始化加载一些视频
+            window.addEventListener('scroll', handleScroll);
+
+            // 动态添加背景图片选项
+            const skinOptions = document.getElementById('skinOptions');
+            backgroundImages.slice(2).forEach((imageUrl, index) => {
+                const li = document.createElement('li');
+                li.textContent = `自定义背景 ${index + 1}`;
+                li.setAttribute('data-skin', index + 2); // 索引从2开始
+                li.addEventListener('click', function() {
+                    applySkin(parseInt(this.getAttribute('data-skin')));
+                    skinOptions.style.display = 'none'; // 关闭选项列表
+                });
+                skinOptions.appendChild(li);
+            });
+
+            // 添加点击事件监听器
+            document.getElementById('videoList').addEventListener('click', function(event) {
+                const videoItem = event.target.closest('.video-item');
+                if (videoItem) {
+                    const videoUrl = videoItem.getAttribute('data-video-url');
+                    window.open(videoUrl, '_blank'); // 在新标签页中打开视频链接
+                }
+            });
+
+            // 展开和关闭皮肤选项列表
+            const skinButton = document.getElementById('skinButton');
+            skinButton.addEventListener('click', function() {
+                const options = document.getElementById('skinOptions');
+                options.style.display = options.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // 关闭皮肤选项列表当点击其他地方时
+            document.addEventListener('click', function(event) {
+                const targetElement = event.target;
+                const isClickInside = skinButton.contains(targetElement) || skinOptions.contains(targetElement);
+                if (!isClickInside) {
+                    skinOptions.style.display = 'none';
+                }
+            });
+
+            // 初始化应用默认皮肤
+            applySkin(0);
+
+            // 搜索功能
+            const searchButton = document.getElementById('searchButton');
+            searchButton.addEventListener('click', function() {
+                const keyword = document.getElementById('searchInput').value.trim();
+                if (keyword) {
+                    const url = `https://search.bilibili.com/all?keyword=${encodeURIComponent(keyword)}&from_source=webtop_search&spm_id_from=333.1007&search_source=5`;
+                    window.open(url, '_blank');
+                }
+            });
+        });
+
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const filter = this.value.toLowerCase();
+            const videoItems = document.querySelectorAll('.video-item');
+            
+            videoItems.forEach(item => {
+                const title = item.querySelector('h3').textContent.toLowerCase();
+                if (title.includes(filter)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
